@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Player - CricVision</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #e6f0ff;
+            text-align: center;
+        }
+
+        h1 {
+            color: #004080;
+            margin-bottom: 30px;
+        }
+
+        form {
+            background: #f2f9ff;
+            padding: 25px;
+            border-radius: 12px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: left;
+            color: #004080;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #00264d;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 15px;
+            background-color: white;
+            color: #004080;
+            border: 2px solid #004080;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: #004080;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Edit Player</h1>
+
+<form method="POST">
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ player.name }}" required>
+
+    <label>Role:</label>
+    <select name="role">
+        <option value="Batter" {% if player.role == "Batter" %}selected{% endif %}>Batter</option>
+        <option value="Bowler" {% if player.role == "Bowler" %}selected{% endif %}>Bowler</option>
+        <option value="All Rounder" {% if player.role == "All Rounder" %}selected{% endif %}>All Rounder</option>
+    </select>
+
+    <label>Team:</label>
+    <select name="team">
+        {% for team in teams %}
+            <option value="{{ team }}"
+                {% if player.team == team %}selected{% endif %}>
+                {{ team }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Update Player</button>
+</form>
+
+<a href="/admin" class="back-link">Back to Admin</a>
+
+</body>
+</html>
+

@@ -1,0 +1,196 @@
+<html>
+<head>
+    <title>Admin Panel - CricVision</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #e6f0ff;
+        }
+
+        h1 {
+            color: #004080;
+        }
+
+        h2 {
+            color: #004080;
+            margin-top: 40px;
+        }
+
+        form {
+            background: #f2f9ff;
+            padding: 20px;
+            border-radius: 12px;
+            width: 500px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #00264d;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            margin: 10px 0;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            margin-left: 10px;
+            color: #004080;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Panel - CricVision</h1>
+
+    <!-- Add Player Form -->
+    <form action="/add_player" method="post">
+        <h2>Add New Player</h2>
+        <label>Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Role:</label>
+        <select name="role">
+            <option value="Batter">Batter</option>
+            <option value="Bowler">Bowler</option>
+            <option value="All Rounder">All Rounder</option>
+        </select>
+
+        <label>Team:</label>
+        <select name="team">
+            {% for team in teams %}
+                <option value="{{ team }}">{{ team }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Add Player</button>
+    </form>
+
+    <hr>
+
+    <h2>Enter Match Performance</h2>
+    <form action="/add_performance" method="post">
+        <label>Select Player:</label>
+        <select name="player_id" required>
+            {% for player in players %}
+                <option value="{{ player.id }}">{{ player.name }} - {{ player.team }} ({{ player.role }})</option>
+            {% endfor %}
+        </select>
+
+        <label>Opponent Team:</label>
+        <select name="opponent" required>
+            {% for team in teams %}
+                <option value="{{ team }}">{{ team }}</option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <div id="batting-fields">
+            <label>Runs:</label>
+            <input type="number" name="runs" value="0">
+            <label>Balls:</label>
+            <input type="number" name="balls" value="0">
+            <label>Fours:</label>
+            <input type="number" name="fours" value="0">
+            <label>Sixes:</label>
+            <input type="number" name="sixes" value="0">
+        </div>
+
+        <div id="bowling-fields">
+            <label>Wickets:</label>
+            <input type="number" name="wickets" value="0">
+        </div>
+
+        <button type="submit">Add Performance</button>
+    </form>
+
+    <hr>
+
+    <h2>Current Players</h2>
+    <ul>
+        {% for player in players %}
+            <li>
+                {{ player.name }} - {{ player.team }} - {{ player.role }}
+                <span>
+                    <a href="/delete_player/{{ player.id }}">Delete</a>
+                    <a href="/edit_player/{{ player.id }}">Edit</a>
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        // Show/hide fields depending on player role
+        const roleSelect = document.querySelector('select[name="player_id"]');
+        const battingFields = document.getElementById('batting-fields');
+        const bowlingFields = document.getElementById('bowling-fields');
+
+        function updateFields() {
+            const selectedOption = roleSelect.selectedOptions[0];
+            const roleText = selectedOption.text.match(/\((.*?)\)/)[1]; // get role from text
+
+            if(roleText === "Batter") {
+                battingFields.style.display = 'block';
+                bowlingFields.style.display = 'none';
+            } else if(roleText === "Bowler") {
+                battingFields.style.display = 'none';
+                bowlingFields.style.display = 'block';
+            } else {
+                // All Rounder
+                battingFields.style.display = 'block';
+                bowlingFields.style.display = 'block';
+            }
+        }
+
+        roleSelect.addEventListener('change', updateFields);
+        updateFields();
+    </script>
+</body>
+</html>
+

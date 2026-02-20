@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("/static/homebg.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: bold;
+            color: #004080;
+            margin-bottom: 30px;
+        }
+
+        form {
+            margin-bottom: 40px;
+        }
+
+        select {
+            padding: 10px;
+            width: 220px;
+            border-radius: 8px;
+            border: 2px solid #004080;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 25px;
+            border-radius: 8px;
+            border: none;
+            background-color: #004080;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #00264d;
+        }
+
+        table {
+            margin: auto;
+            width: 80%;
+            border-collapse: collapse;
+            background-color: rgba(255,255,255,0.95);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        th {
+            background-color: #004080;
+            color: rgb(235, 232, 232);
+            padding: 12px;
+            font-size: 18px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        tr:hover {
+            background-color: #f2f9ff;
+        }
+
+        .player-name {
+            font-weight: bold;
+            font-size: 18px;
+            color: #eef0f3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Compare Players</h1>
+
+<form method="POST">
+    <select name="player1" required>
+        <option value="">Select Player 1</option>
+        {% for player in players %}
+            <option value="{{ player.id }}">
+                {{ player.name }} ({{ player.team }})
+            </option>
+        {% endfor %}
+    </select>
+
+    <select name="player2" required>
+        <option value="">Select Player 2</option>
+        {% for player in players %}
+            <option value="{{ player.id }}">
+                {{ player.name }} ({{ player.team }})
+            </option>
+        {% endfor %}
+    </select>
+
+    <br>
+    <button type="submit">Compare</button>
+</form>
+
+{% if stats1 and stats2 %}
+<table>
+    <tr>
+        <th>Statistic</th>
+        <th class="player-name">{{ stats1.player.name }}</th>
+        <th class="player-name">{{ stats2.player.name }}</th>
+    </tr>
+    <tr>
+        <td>Matches</td>
+        <td>{{ stats1.matches }}</td>
+        <td>{{ stats2.matches }}</td>
+    </tr>
+    <tr>
+        <td>Runs</td>
+        <td>{{ stats1.runs }}</td>
+        <td>{{ stats2.runs }}</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td>{{ stats1.average }}</td>
+        <td>{{ stats2.average }}</td>
+    </tr>
+    <tr>
+        <td>Strike Rate</td>
+        <td>{{ stats1.strike_rate }}</td>
+        <td>{{ stats2.strike_rate }}</td>
+    </tr>
+    <tr>
+        <td>Wickets</td>
+        <td>{{ stats1.wickets }}</td>
+        <td>{{ stats2.wickets }}</td>
+    </tr>
+</table>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CricVision</title>
+
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+    font-family: 'Segoe UI', sans-serif;
+    background: url("{{ url_for('static', filename='homebg.jpeg') }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    min-height: 100vh;
+}
+
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+        }
+
+        .brand-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand-container img {
+            width: 70px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.6);
+        }
+
+        header h1 {
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        .cric { color: red; }
+        .vision { color: black; }
+
+        .welcome-text {
+            margin-top: 10px;
+            font-size: 20px;
+            color: rgb(12, 5, 5);
+        }
+
+        /* MAIN SECTION */
+        .main-container {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 30px;
+            width: 400px;
+            min-height: 350px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: #003366;
+
+        }
+
+        /* LEFT WIDGET CARD */
+       .widget-box {
+    height: 430px;
+    width: 100%;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+
+        /* RIGHT LOGO GLOW */
+        .t20-logo {
+            width: 220px;
+            margin: 15px 0;
+            border-radius: 25px;
+            box-shadow: 0 0 25px rgba(255,255,255,0.8);
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #0066ff, #00aaff);
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, #0044cc, #0088ff);
+        }
+
+        /* COMPARISON BUTTON */
+        .comparison-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .comparison-btn {
+            padding: 18px 40px;
+            font-size: 20px;
+            border-radius: 16px;
+        }
+
+        /* FOOTER STRIP */
+        .developer-strip {
+            background-color: #000d26;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width: 900px){
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="brand-container">
+        <img src="{{ url_for('static', filename='brand.jpeg') }}" alt="Brand Logo">
+        <h1><span class="cric">cric</span><span class="vision">Vision</span></h1>
+    </div>
+    <div class="welcome-text">
+        Welcome to CricVision App
+    </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<div class="main-container">
+
+    <!-- LEFT SIDE -->
+    <div class="card">
+        <h2>Scorecard and Fixtures</h2>
+        <div class="widget-box">
+           <iframe src="https://widget.crictimes.org/" style="width:100%;min-height: 450px;" frameborder="0" scrolling="yes"></iframe>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="card">
+        <h2>T20 World Cup 2026</h2>
+        <img src="{{ url_for('static', filename='real.jpeg') }}" alt="T20 Logo" class="t20-logo">
+
+        <div>
+            <a href="/squad" class="btn">Squad</a>
+            <a href="/squad" class="btn">Stats</a>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- PLAYER COMPARISON -->
+<div class="comparison-section">
+    <a href="/compare" class="btn comparison-btn">Player to Player Comparison</a>
+</div>
+
+<!-- FOOTER -->
+<div class="developer-strip">
+    Developed by Arya Dhuri | Omkar Dalvi | Soham Barve | Aditya Dubal
+</div>
+
+</body>
+</html>
